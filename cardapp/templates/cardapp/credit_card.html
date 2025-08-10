@@ -1,0 +1,80 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'cardapp/base.css' %}?v=1">
+<link rel="stylesheet" href="{% static 'cardapp/card-credit.css' %}?v=1">
+<link rel="stylesheet" href="{% static 'cardapp/theme-credit-gold.css' %}?v=1">
+...
+<script type="module" src="{% static 'cardapp/main-credit.js' %}?v=1"></script>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Credit Card Payment</title>
+
+  <link rel="stylesheet" href="{% static 'cardapp/css/base.css' %}?v=1">
+  <link rel="stylesheet" href="{% static 'cardapp/css/card-credit.css' %}?v=1">
+  <link rel="stylesheet" href="{% static 'cardapp/css/theme-credit-gold.css' %}?v=1">
+</head>
+<body>
+  <div class="container">
+    <h1>Credit Card Payment</h1>
+
+    <div class="payment-container">
+      <div class="card-scene">
+        <div class="card card--credit theme--gold" id="credit-card" aria-live="polite">
+          <div class="card-face card-front">
+            <div class="card-top">
+              <!-- remove the literal "gold" text if you don't want it -->
+              <!-- <span class="card-tier">gold</span> -->
+              <span class="contactless" aria-hidden="true"></span>
+            </div>
+
+            <div class="chip" aria-hidden="true"></div>
+
+            <div class="card-number" id="preview-number">#### #### #### ####</div>
+
+            <div class="card-footer">
+              <div class="holder-block">
+                <label>Card Holder</label>
+                <div id="preview-name">FULL NAME</div>
+              </div>
+              <div class="expiry-block">
+                <label>Expires</label>
+                <div id="preview-expiry">MM/YY</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-face card-back">
+            <div class="magnetic-stripe" aria-hidden="true"></div>
+            <div class="signature-row">
+              <div class="signature-box" aria-hidden="true"></div>
+              <div class="cvv-label">CVV</div>
+              <div class="cvv-value" id="preview-cvv">***</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <form class="card-form" autocomplete="on">
+        <label for="card-number">Card Number</label>
+        <input id="card-number" type="text" inputmode="numeric" autocomplete="cc-number"
+               placeholder="1234 5678 9012 3456" maxlength="19" aria-describedby="number-help">
+        <small id="number-help">Enter 16 digits. Formatting will add spaces automatically.</small><br><br>
+
+        <label for="card-name">Card Holder Name</label>
+        <input id="card-name" type="text" autocomplete="cc-name" placeholder="Full Name"><br><br>
+
+        <label for="card-expiry">Expiration Date</label>
+        <input id="card-expiry" type="text" inputmode="numeric" autocomplete="cc-exp" placeholder="MM/YY" maxlength="5"><br><br>
+
+        <label for="card-cvv">CVV</label>
+        <input id="card-cvv" type="password" inputmode="numeric" autocomplete="cc-csc" placeholder="123" maxlength="3">
+      </form>
+    </div>
+  </div>
+
+  <script type="module" src="{% static 'cardapp/js/main-credit.js' %}?v=1"></script>
+</body>
+</html>

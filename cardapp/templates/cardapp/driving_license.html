@@ -1,0 +1,132 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sürücü Belgesi – Önizleme</title>
+
+  <link rel="stylesheet" href="{% static 'cardapp/base.css' %}?v=1">
+  <link rel="stylesheet" href="{% static 'cardapp/card-license.css' %}?v=1">
+</head>
+<body>
+  <div class="container">
+    <h1>Sürücü Belgesi</h1>
+
+    <div class="payment-container">
+      <!-- Card preview -->
+      <div class="card-scene">
+        <div class="card card--license" id="license-card" aria-live="polite">
+          <!-- FRONT -->
+          <div class="card-face license-front">
+            <div class="license-header">
+              <div class="tr-badge" aria-hidden="true">TR</div>
+              <div class="doc-title">
+                <span>SÜRÜCÜ BELGESİ</span>
+                <small>DRIVING LICENSE</small>
+              </div>
+              <div class="flag" aria-hidden="true"></div>
+            </div>
+
+            <div class="license-body">
+              <!-- note the 'empty' class for placeholder -->
+              <div class="photo empty" id="preview-photo" aria-label="Fotoğraf"></div>
+
+              <div class="id-grid">
+                <div class="row">
+                  <label>Belge No</label>
+                  <div id="preview-license-no">123456</div>
+                </div>
+                <div class="row">
+                  <label>T.C. Kimlik No</label>
+                  <div id="preview-tckn">12345678901</div>
+                </div>
+                <div class="row">
+                  <label>Ad Soyad</label>
+                  <div id="preview-name">ADI SOYADI</div>
+                </div>
+                <div class="row two-cols">
+                  <div>
+                    <label>Doğum Tarihi</label>
+                    <div id="preview-dob">01.01.2000</div>
+                  </div>
+                  <div>
+                    <label>Sınıf</label>
+                    <div id="preview-class">B</div>
+                  </div>
+                </div>
+                <div class="row two-cols">
+                  <div>
+                    <label>Veriliş</label>
+                    <div id="preview-issue">01.01.2024</div>
+                  </div>
+                  <div>
+                    <label>Geçerlilik</label>
+                    <div id="preview-expiry">01.01.2034</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- BACK -->
+          <div class="card-face license-back">
+            <div class="mrz">
+              <div>IDC&lt;TUR&lt;DOE&lt;&lt;ISIM&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;</div>
+              <div>12345678901TUR9901012F3401019&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;</div>
+            </div>
+
+            <div class="back-grid">
+              <div class="signature">
+                <label>İmza</label>
+                <div class="line"></div>
+              </div>
+              <div class="barcode" aria-hidden="true"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Form -->
+      <form class="card-form" id="license-form" method="post" enctype="multipart/form-data" novalidate>
+        {% csrf_token %}
+        <label>Belge No</label>
+        <input id="lic-no" placeholder="123456">
+        <small class="error-msg" id="err-lic-no"></small>
+
+        <label>T.C. Kimlik No</label>
+        <input id="lic-tckn" inputmode="numeric" maxlength="11" placeholder="12345678901">
+        <small class="error-msg" id="err-lic-tckn"></small>
+
+        <label>Ad Soyad</label>
+        <input id="lic-name" placeholder="ADI SOYADI">
+        <small class="error-msg" id="err-lic-name"></small>
+
+        <label>Doğum Tarihi</label>
+        <input id="lic-dob" placeholder="GG.AA.YYYY">
+        <small class="error-msg" id="err-lic-dob"></small>
+
+        <label>Sınıf</label>
+        <input id="lic-class" placeholder="B">
+        <small class="error-msg" id="err-lic-class"></small>
+
+        <label>Veriliş</label>
+        <input id="lic-issue" placeholder="GG.AA.YYYY">
+        <small class="error-msg" id="err-lic-issue"></small>
+
+        <label>Geçerlilik</label>
+        <input id="lic-expiry" placeholder="GG.AA.YYYY">
+        <small class="error-msg" id="err-lic-expiry"></small>
+
+        <label>Fotoğraf</label>
+        <input id="lic-photo" type="file" accept="image/*">
+        <small class="error-msg" id="err-lic-photo"></small>
+
+        <button type="button" id="flip-btn" style="margin-top:10px;">Ön/Arka Çevir</button>
+      </form>
+    </div>
+  </div>
+
+  <script type="module" src="{% static 'cardapp/main-license.js' %}?v=2"></script>
+</body>
+</html>

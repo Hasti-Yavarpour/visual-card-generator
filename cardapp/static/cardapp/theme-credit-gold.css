@@ -1,0 +1,14 @@
+/* Gold theme variables (feel free to tweak) */
+:root{
+  --gold-1:#b89857;
+  --gold-2:#d7bf7a;
+}
+
+/* Apply gold to both faces of credit card */
+.card--credit.theme--gold .card-face{
+  background:
+    radial-gradient(200% 140% at 15% 0%, rgba(255,255,255,.10) 0%, transparent 55%),
+    radial-gradient(180% 120% at 95% 100%, rgba(255,255,255,.08) 0%, transparent 60%),
+    linear-gradient(135deg, var(--gold-1), var(--gold-2)) !important;
+  color:var(--text-soft);
+}
