@@ -115,25 +115,48 @@ function validateDates(dobStr, issueStr, expStr) {
   const today = new Date();
   const result = { ok: true, problems: {} };
 
-  const dob = parseDateTR(dobStr);
-  if (!dob || !validDateRange(dob)) {
-    result.ok = false; result.problems.dob = "Tarih GG.AA.YYYY olmalı.";
-  }
-
+  const dob   = parseDateTR(dobStr);
   const issue = parseDateTR(issueStr);
+  const exp   = parseDateTR(expStr);
+
+  // basic format/range checks
+  if (!dob || !validDateRange(dob)) {
+    result.ok = false;
+    result.problems.dob = "Tarih GG.AA.YYYY olmalı.";
+  }
   if (!issue || !validDateRange(issue)) {
-    result.ok = false; result.problems.issue = "Tarih GG.AA.YYYY olmalı.";
+    result.ok = false;
+    result.problems.issue = "Tarih GG.AA.YYYY olmalı.";
   }
-
-  const exp = parseDateTR(expStr);
   if (!exp || !validDateRange(exp)) {
-    result.ok = false; result.problems.exp = "Tarih GG.AA.YYYY olmalı.";
+    result.ok = false;
+    result.problems.exp = "Tarih GG.AA.YYYY olmalı.";
   }
 
-  if (dob && issue && issue < dob) { result.ok = false; result.problems.issue = "Veriliş, doğumdan sonra olmalı."; }
-  if (issue && exp && exp <= issue) { result.ok = false; result.problems.exp = "Geçerlilik, verilişten sonra olmalı."; }
-  if (dob && dob > today) { result.ok = false; result.problems.dob = "Gelecek tarih olamaz."; }
-  if (exp && exp < issue) { result.ok = false; result.problems.exp = "Geçerlilik verilişten sonra olmalı."; }
+  // logical ordering
+  if (dob && issue && issue < dob) {
+    result.ok = false;
+    result.problems.issue = "Veriliş, doğumdan sonra olmalı.";
+  }
+  if (issue && exp && exp <= issue) {
+    result.ok = false;
+    result.problems.exp = "Geçerlilik, verilişten sonra olmalı.";
+  }
+  if (dob && dob > today) {
+    result.ok = false;
+    result.problems.dob = "Gelecek tarih olamaz.";
+  }
+
+  // 18+ rule — precise to day and month
+  if (dob) {
+    let age = today.getFullYear() - dob.getFullYear();
+    const m = today.getMonth() - dob.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < dob.getDate())) age--;
+    if (age < 18) {
+      result.ok = false;
+      result.problems.dob = "En az 18 yaşında olmalısınız.";
+    }
+  }
 
   return result;
 }
@@ -222,6 +245,7 @@ function validateField_Dates() {
 });
 [inDob, inIssue, inExp].forEach(inp => {
   inp?.addEventListener("blur", validateField_Dates);
+  inp?.addEventListener("input", validateField_Dates);
 });
 
 function validateAll() {

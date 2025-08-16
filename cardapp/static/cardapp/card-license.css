@@ -114,3 +114,7 @@
 .card--license .doc-title small { font-size: 10px; }
 .card--license .license-body { gap: 10px; }  /* less vertical spacing */
 .card--license .photo { height: 140px; }     /* slightly shorter photo */
+
+
+.error-msg { display:block; color:#d00; margin-top:4px; font-size:12px; }
+.is-invalid { border-color:#d00; }
